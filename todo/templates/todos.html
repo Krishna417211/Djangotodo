@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="columns is-centered">
+  <div class="column is-6">
+    <!-- Todo Header & Form Card -->
+    <div class="card mb-5">
+      <div class="card-content">
+        <h1 class="title is-4 has-text-white">Todos</h1>
+        <hr class="divider">
+
+        <!-- Add Todo Form -->
+        <form method="post">
+          {% csrf_token %}
+          <div class="field mt-4">
+            <div class="control">
+              {{ form.title.label_tag }}
+              {{ form.title|default:"" }}
+              <br><br><br><br>
+              {{ form.description.label_tag }}
+              {{ form.description|default:"" }}
+              <br> <br><br><br><br>
+              {{ form.is_done.label_tag }}
+              {{ form.is_done|default:"" }}
+
+            </div>
+          </div>
+          <div class="field mt-4">
+            <div class="control">
+              <button type="submit" class="button is-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Todo List -->
+<hr>
+    <div class="'column is-12">
+        {% for todo in todos %}
+            <p>{{todo.title}}( Is done :{{ todo.is_done}})<a href="{% url 'todo' todo.id %}">View details</a></p><br>
+        {% empty %}   
+           <p>You dont have any todos yet</p>
+        {% endfor %} 
+    </div>
+
+</div>
+{% endblock %}
+
+
